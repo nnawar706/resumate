@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {type FormEvent, useEffect, useState} from 'react'
 import {usePuterStore} from "~/lib/puter";
 import {useNavigate} from "react-router";
 import Navbar from "~/components/Navbar";
@@ -11,7 +11,12 @@ const Upload = () => {
     const isAuthenticated = auth.isAuthenticated;
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const [status, setStatus] = useState<string>("");
+    const [companyName, setCompanyName] = useState<string>("");
+    const [jobTitle, setJobTitle] = useState<string>("");
+    const [jobDescription, setJobDescription] = useState<string>("");
     const [file, setFile] = useState<File | null>(null);
+
+    const isSubmittable = companyName.trim() !== "" && jobTitle.trim() !== "" && jobDescription.trim() !== "" && file !== null;
 
     useEffect(() => {
         if (!isAuthenticated) navigate("/auth?next=/")
@@ -21,7 +26,18 @@ const Upload = () => {
         setFile(file);
     }
 
-    const handleSubmit = () => {}
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const form = e.currentTarget.closest("form");
+
+        if (!form) return;
+
+        const formData = new FormData(form);
+
+        const companyName = formData.get('company-name') as string;
+        const jobTitle = formData.get('job-title') as string;
+        const jobDescription = formData.get('job-description') as string;
+    }
 
     return (
         <main className={"upload-section"}>
@@ -43,17 +59,20 @@ const Upload = () => {
                         <form id={"upload-form"} onSubmit={handleSubmit}
                               className={"flex flex-col gap-4 mt-8"}>
                             <div className={"form-div"}>
-                                <label htmlFor={"company-name"}>Company Name <span className={"text-red-600"}>*</span></label>
-                                <input type={"text"} name={"company-name"} id={"company-name-input"}/>
+                                <label htmlFor={"company-name"}>Company Name <span
+                                    className={"text-red-600"}>*</span></label>
+                                <input type={"text"} name={"company-name"}
+                                       onChange={(e) => setCompanyName(e.target.value)}/>
                             </div>
                             <div className={"form-div"}>
                                 <label htmlFor={"job-title"}>Job Title <span className={"text-red-600"}>*</span></label>
-                                <input type={"text"} name={"job-title"} id={"job-title-input"}/>
+                                <input type={"text"} name={"job-title"} onChange={(e) => setJobTitle(e.target.value)}/>
                             </div>
                             <div className={"form-div"}>
                                 <label htmlFor={"job-description"}>Job Description <span
                                     className={"text-red-600"}>*</span></label>
-                                <textarea rows={5} name={"job-description"} id={"job-description-input"}/>
+                                <textarea rows={5} name={"job-description"}
+                                          onChange={(e) => setJobDescription(e.target.value)}/>
                             </div>
                             <div className={"form-div"}>
                                 <label htmlFor={"uploader"}>Upload Resume <span
@@ -62,7 +81,11 @@ const Upload = () => {
                             </div>
 
                             <p className={"text-xs text-red-600"}>* indicates required fields</p>
-                            <button type="submit" className={"primary-button"}>Analyze Resume</button>
+
+                            <button type="submit"
+                                    disabled={!isSubmittable}
+                                    className={`primary-button ${isSubmittable ? "cursor-pointer" : "cursor-block"}`}>Analyze Resume
+                            </button>
                         </form>
                     )}
                 </div>
