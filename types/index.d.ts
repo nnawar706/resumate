@@ -44,3 +44,7 @@ interface FeedbackTip2 {
 interface ScoreProps {
     score: number;
 }
+
+interface FileUploaderProps {
+    onFileSelect?: (file: File | null) => void;
+}

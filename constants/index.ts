@@ -1,8 +1,18 @@
-import logo from "public/icons/logo.png"
-import scanner from "public/images/resume-scan-2.gif"
+import logo from "/icons/logo.png"
+import resumeScanner from "/images/resume-scan.gif"
+import scanner from "/images/resume-scan-2.gif"
+import pdf from "/images/pdf.png";
+import cross from "/icons/cross.svg";
+import upload from "/icons/upload.svg";
 
 export const LOGO = logo
 export const SCANNER = scanner
+export const RESUMESCANNER = resumeScanner
+export const PDF = pdf
+export const ICONCROSS = cross
+export const ICONUPLOAD = upload
+
+export const MAXFILESIZE = 20 * 1024 * 1024 // 20MB in bytes
 
 export const RADIUS = 40;
 export const STROKE = 8;
