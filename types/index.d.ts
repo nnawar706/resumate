@@ -1,7 +1,5 @@
-interface ResumeProps {
+interface ResumeProps extends InstructionProps {
     id: string;
-    companyName: string;
-    jobTitle: string;
     feedback: FeedbackProps;
     imageUrl: string;
 }
@@ -48,4 +46,9 @@ interface ScoreProps {
 interface FileUploaderProps {
     file: File | null;
     onFileSelect?: (file: File | null) => void;
+}
+
+interface InstructionProps {
+    jobTitle: string;
+    jobDescription: string;
 }

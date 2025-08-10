@@ -2,12 +2,14 @@ import React, {type FormEvent, useEffect, useState} from 'react'
 import {usePuterStore} from "~/lib/puter";
 import {useNavigate} from "react-router";
 import Navbar from "~/components/Navbar";
-import {RESUMESCANNER} from "../../constants";
+import {prepareInstructions, RESUMESCANNER} from "../../constants";
 import FileUploader from "~/components/FileUploader";
+import {convertPdfToImage} from "~/lib/pdf2image";
+import {generateUUID} from "~/lib/utils";
 
 const Upload = () => {
     const navigate = useNavigate();
-    const { auth, isLoading } = usePuterStore();
+    const { auth, isLoading, fs, kv, ai } = usePuterStore();
     const isAuthenticated = auth.isAuthenticated;
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const [status, setStatus] = useState<string>("");
@@ -26,17 +28,60 @@ const Upload = () => {
         setFile(file);
     }
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const form = e.currentTarget.closest("form");
 
-        if (!form) return;
+        if (!file) return;
 
-        const formData = new FormData(form);
+        setIsProcessing(true);
 
-        const companyName = formData.get('company-name') as string;
-        const jobTitle = formData.get('job-title') as string;
-        const jobDescription = formData.get('job-description') as string;
+        // console.log({companyName, jobTitle, jobDescription, file})
+
+        setStatus("Uploading in progress...");
+
+        const uploadedFile = await fs.upload([file]);
+        if (!uploadedFile) return setStatus("Error: Failed to upload file.");
+
+        setStatus("Converting to image...");
+        const imageFile = await convertPdfToImage(file);
+        if (!imageFile.file) return setStatus("Error: Failed to convert PDF to image.");
+
+        setStatus("Uploading the image...");
+        const uploadedImage = await fs.upload([imageFile.file]);
+        if (!uploadedImage) return setStatus("Error: Failed to upload image.");
+
+        setStatus("Analyzing in progress...");
+        const uuid = generateUUID();
+
+        const data = {
+            id: uuid,
+            resumePath: uploadedFile.path,
+            imagePath: uploadedImage.path,
+            companyName, jobTitle, jobDescription,
+            feedback: ""
+        }
+
+        await kv.set(`resume#${uuid}`, JSON.stringify(data));
+
+        setStatus("Generating feedback...");
+
+        const feedback = await ai.feedback(
+            uploadedFile.path,
+            prepareInstructions({jobTitle, jobDescription})
+        );
+
+        if (!feedback) return setStatus("Error: Failed to generate feedback.");
+
+        const feedbackText = typeof feedback.message.content === "string"
+            ? feedback.message.content
+            : feedback.message.content[0].text;
+
+        data.feedback = JSON.parse(feedbackText);
+
+        await kv.set(`resume#${uuid}`, JSON.stringify(data));
+        setStatus("Redirecting...");
+        console.log(data);
+        // navigate(``)
     }
 
     return (
