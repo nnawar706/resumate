@@ -69,4 +69,5 @@ interface InstructionProps {
 
 interface NavbarProps {
     showUpload: boolean;
+    showSignOut?: boolean;
 }

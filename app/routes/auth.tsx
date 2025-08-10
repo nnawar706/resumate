@@ -17,7 +17,12 @@ const Auth = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(auth.isAuthenticated) navigate(next);
+        if(auth.isAuthenticated) {
+            if (next) {
+                navigate(next);
+            }
+            navigate("/");
+        }
     }, [isAuthenticated, next]);
 
     return (
@@ -26,15 +31,15 @@ const Auth = () => {
                 <div className={"flex flex-col gap-8 bg-white rounded-2xl p-10"}>
                     <div className={"flex flex-col items-center gap-2 text-center"}>
                         <h1>Welcome</h1>
-                        <h3>Sign In to Continue Your Journey of Job Hunting</h3>
+                        <h2>Sign In to Continue Your Journey of Job Hunting</h2>
                     </div>
                     <div>
                         {isLoading ? (
                             <button className={"auth-button animate-pulse"}>Signing you in...</button>
                         ): (
                             <button className={"auth-button"}
-                                    onClick={isAuthenticated ? auth.signOut : auth.signIn}>
-                                {isAuthenticated ? "Sign Out" : "Sign In"}
+                                    onClick={auth.signIn}>
+                                Sign In
                             </button>
                         )}
                     </div>

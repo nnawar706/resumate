@@ -1,6 +1,6 @@
 import type { Route } from "./+types/home";
 import {useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router";
+import {useNavigate} from "react-router";
 
 import {SCANNER} from "../../constants";
 import Navbar from "~/components/Navbar";
@@ -45,7 +45,7 @@ export default function Home() {
   }, []);
 
   return <main className={"bg-[url('/images/bg-main.svg')] bg-cover"}>
-    <Navbar showUpload={true}/>
+    <Navbar showUpload={true} showSignOut={true}/>
 
     <section className={"main-section"}>
       <div className={"page-heading py-16"}>
@@ -53,9 +53,12 @@ export default function Home() {
       {/*  #later# show resumes if any */}
         <h2>Review your submissions and check AI-powered feedback.</h2>
       </div>
-      {loading && (
+      {(loading || (!loading && resumes.length === 0)) && (
           <div className={"flex flex-col items-center justify-center"}>
             <img src={SCANNER} className={"w-[200px]"} alt={"resume-scanner"}/>
+            {!loading && resumes.length === 0 &&
+                (<p className={"text-dark-200"}>You do not have any submissions yet.</p>)
+            }
           </div>
       )}
 
@@ -70,14 +73,6 @@ export default function Home() {
                         imagePath={resume.imagePath}
                 />
             ))}
-          </div>
-      )}
-
-      {!loading && resumes.length === 0 && (
-          <div className={"flex flex-col items-center justify-center mt-10 gap-4"}>
-            <Link to={"/upload"} className={"primary-button w-fit text-xl font-semibold"}>
-              Upload Resume
-            </Link>
           </div>
       )}
     </section>
