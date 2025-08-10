@@ -38,11 +38,11 @@ main {
 }
 
 h1 {
-  @apply max-sm:text-[3rem] text-6xl  text-gradient leading-tight xl:tracking-[-2px] font-semibold;
+  @apply max-sm:text-[3rem] text-4xl  text-gradient leading-tight xl:tracking-[-2px] font-semibold;
 }
 
 h2 {
-  @apply max-sm:text-xl text-3xl text-dark-200;
+  @apply max-sm:text-xl text-xl text-dark-200;
 }
 
 label {
@@ -149,12 +149,12 @@ form {
 
 @utility primary-gradient {
   background: linear-gradient(to bottom, #8e98ff, #606beb);
-  box-shadow: 0px 74px 21px 0px #6678ef00;
+  box-shadow: 0 74px 21px 0 #6678ef00;
 }
 
 @utility primary-gradient-blur {
   background: linear-gradient(to bottom, #c4c8f6, #8e98ff);
-  box-shadow: 0px 74px 21px 0px #6678ef00;
+  box-shadow: 0 74px 21px 0 #6678ef00;
 }
 
 @utility primary-gradient-hover {

@@ -54,27 +54,29 @@ const Resume = () => {
     return (
         <main className={"!pt-0"}>
             <Navbar showUpload={false}/>
-            <section className={"flex flex-row w-full max-lg:flex-col-reverse"}>
-                <div className={"feedback-section bg-[url('/images/bg-small.svg') bg-cover h-[100vh] sticky top-0 items-center justify-center"}>
-                    <div className={"animate-in fade-in duration-1000 gradient-border max-sm:m-0 h-[90%] max-wxl:h-fit w-fit"}>
-                        <a href={resumeUrl} target={"_blank"} rel={"noopener noreferrer"}>
-                            <img src={imageUrl} className={"w-full h-full object-contain rounded-2xl"} alt={"resume"}/>
-                        </a>
-                    </div>
-                </div>
-                <div className={"feedback-section"}>
-                    <h2 className={"text-4xl font-bold"}>Resume Review</h2>
-                    {feedback ? (
-                        <div className={"flex flex-col gap-8 animate-in fade-in duration-1000"}>
-                            <Summary feedback={feedback}/>
-
-                            <Ats score={feedback.ATS.score || 0} suggestions={feedback.ATS.tips || []}/>
-
-                            <Details feedback={feedback}/>
+            {feedback ? (
+                    <section className={"flex flex-row w-full max-lg:flex-col-reverse"}>
+                        <div className={"feedback-section bg-[url('/images/bg-small.svg') bg-cover h-[100vh] sticky top-0 items-center justify-center"}>
+                            <div className={"animate-in fade-in duration-1000 gradient-border max-sm:m-0 h-[90%] max-wxl:h-fit w-fit"}>
+                                <a href={resumeUrl} target={"_blank"} rel={"noopener noreferrer"}>
+                                    <img src={imageUrl} className={"w-full h-full object-contain rounded-2xl"} alt={"resume"}/>
+                                </a>
+                            </div>
                         </div>
-                    ) : (<img src={SCANNER} className={"w-full"} alt={"resume-scanner"}/>)}
-                </div>
-            </section>
+                        <div className={"feedback-section"}>
+                            <h2 className={"text-4xl font-bold"}>Resume Review</h2>
+
+                            <div className={"flex flex-col gap-8 animate-in fade-in duration-1000"}>
+                                <Summary feedback={feedback}/>
+
+                                <Ats score={feedback.ATS.score || 0} suggestions={feedback.ATS.tips || []}/>
+
+                                <Details feedback={feedback}/>
+                            </div>
+                        </div>
+                    </section>
+            ):
+                (<img src={SCANNER} className={"w-full"} alt={"resume-scanner"}/>)}
         </main>
     )
 }

@@ -2,7 +2,7 @@ interface ResumeProps extends InstructionProps {
     id: string;
     companyName: string;
     feedback: FeedbackProps;
-    imageUrl: string;
+    imagePath: string;
 }
 
 interface FeedbackProps {

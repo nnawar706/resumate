@@ -1,20 +1,22 @@
 import React, {useEffect, useState} from 'react'
 import {Link} from "react-router";
 import Score from "~/components/Score";
+import {usePuterStore} from "~/lib/puter";
 
-const Resume = ({id, companyName, jobTitle, feedback, imageUrl}: ResumeProps) => {
+const Resume = ({id, companyName, jobTitle, feedback, imagePath}: ResumeProps) => {
+    const { fs } = usePuterStore();
     const [resumeUrl, setResumeUrl] = useState<string>()
 
-    // useEffect(() => {
-    //     const loadResume = async () => {
-    //         const blob = await fs.read(imagePath);
-    //         if(!blob) return;
-    //         let url = URL.createObjectURL(blob);
-    //         setResumeUrl(url);
-    //     }
-    //
-    //     loadResume();
-    // }, [imageUrl]);
+    useEffect(() => {
+        const loadResume = async () => {
+            const blob = await fs.read(imagePath);
+            if(!blob) return;
+            let url = URL.createObjectURL(blob);
+            setResumeUrl(url);
+        }
+
+        loadResume();
+    }, [imagePath]);
 
     return (
         <Link to={`/resume/${id}`} className={"resume-card animate-in face-in duration-1000"}>
@@ -29,7 +31,7 @@ const Resume = ({id, companyName, jobTitle, feedback, imageUrl}: ResumeProps) =>
             </div>
             <div className={"gradient-border animate-in fade-in duration-1000"}>
                 <div className={"w-full h-full"}>
-                    <img src={imageUrl} alt={`resume#${id}`}
+                    <img src={resumeUrl} alt={`resume#${id}`}
                     className={"w-full h-[350px] max-sm:h-[200px] object-cover object-top"}/>
                 </div>
             </div>

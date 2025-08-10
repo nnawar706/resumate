@@ -2,7 +2,7 @@ import type { Route } from "./+types/home";
 import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router";
 
-import {RESUMES, SCANNER} from "../../constants";
+import {SCANNER} from "../../constants";
 import Navbar from "~/components/Navbar";
 import Resume from "~/components/Resume";
 import {usePuterStore} from "~/lib/puter";
@@ -19,11 +19,30 @@ export default function Home() {
   const isAuthenticated = auth.isAuthenticated;
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
-  const resumes = RESUMES;
+  const [resumes, setResumes] = useState<ResumeProps[]>([]);
 
   useEffect(() => {
     if (!isAuthenticated) navigate("/auth?next=/")
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    const loadResumes = async () => {
+      setLoading(true);
+
+      const resumes = (await kv.list("resume#*", true)) as KVItem[];
+
+      const parsedResumes = resumes?.map((resume) => (
+          JSON.parse(resume.value) as ResumeProps
+      ))
+
+      console.log(parsedResumes)
+
+      setResumes(parsedResumes || []);
+      setLoading(false);
+    }
+
+    loadResumes();
+  }, []);
 
   return <main className={"bg-[url('/images/bg-main.svg')] bg-cover"}>
     <Navbar showUpload={true}/>
@@ -48,7 +67,7 @@ export default function Home() {
                         companyName={resume.companyName}
                         jobTitle={resume.jobTitle}
                         feedback={resume.feedback}
-                        imageUrl={resume.imageUrl}
+                        imagePath={resume.imagePath}
                 />
             ))}
           </div>
