@@ -46,5 +46,6 @@ interface ScoreProps {
 }
 
 interface FileUploaderProps {
+    file: File | null;
     onFileSelect?: (file: File | null) => void;
 }

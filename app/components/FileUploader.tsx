@@ -3,7 +3,7 @@ import {useDropzone} from "react-dropzone";
 import {ICONCROSS, ICONUPLOAD, MAXFILESIZE, PDF} from "../../constants";
 import {formatSize} from "~/lib/utils";
 
-const FileUploader = ({onFileSelect}: FileUploaderProps) => {
+const FileUploader = ({file, onFileSelect}: FileUploaderProps) => {
     const onDrop = useCallback((acceptedFiles: File[]) => {
         const file = acceptedFiles[0] || null;
 
@@ -17,7 +17,7 @@ const FileUploader = ({onFileSelect}: FileUploaderProps) => {
         maxSize: MAXFILESIZE,
     })
 
-    const file = acceptedFiles[0] || null;
+    // const file = acceptedFiles[0] || null;
 
     return (
         <div className={"w-full p-4 rounded-2xl bg-white"}>
@@ -27,7 +27,8 @@ const FileUploader = ({onFileSelect}: FileUploaderProps) => {
                 <div className={"space-y-4 cursor-pointer"}>
                     {file ? (
                         <div className={"uploader-selected-file"}
-                        onClick={(e) => e.stopPropagation()}>
+                        onClick={(e) => e.stopPropagation()}
+                        >
                             <img src={PDF} className={"size-10"} alt={"pdf"}/>
                             <div className={"flex items-center space-x-3"}>
                                 <div>
@@ -35,10 +36,11 @@ const FileUploader = ({onFileSelect}: FileUploaderProps) => {
                                     <p className={"text-sm text-gray-500"}>{formatSize(file.size)}</p>
                                 </div>
                             </div>
-                            <button className={"p-2 cursor-pointer"} onClick={(e) => {onFileSelect?.(null)}}/>
-                            <img src={ICONCROSS} className={"w-4 h-4"} alt={"delete"}/>
+                            <button className={"p-2 cursor-pointer"} onClick={() => {onFileSelect?.(null)}}>
+                                <img src={ICONCROSS} className={"w-4 h-4"} alt={"delete"}/>
+                            </button>
                         </div>
-                    ): (
+                    ) : (
                         <div>
                             <div className="mx-auto w-16 h-16 flex items-center justify-center mb-2">
                                 <img src={ICONUPLOAD} className={"size-10"} alt={"upload"}/>

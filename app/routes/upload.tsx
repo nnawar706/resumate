@@ -77,14 +77,14 @@ const Upload = () => {
                             <div className={"form-div"}>
                                 <label htmlFor={"uploader"}>Upload Resume <span
                                     className={"text-red-600"}>*</span></label>
-                                <FileUploader onFileSelect={handleFileSelect}/>
+                                <FileUploader file={file} onFileSelect={handleFileSelect}/>
                             </div>
 
                             <p className={"text-xs text-red-600"}>* indicates required fields</p>
 
                             <button type="submit"
                                     disabled={!isSubmittable}
-                                    className={`primary-button ${isSubmittable ? "cursor-pointer" : "cursor-block"}`}>Analyze Resume
+                                    className={`primary-button ${isSubmittable ? "cursor-pointer" : "!primary-gradient-blur cursor-not-allowed"}`}>Analyze Resume
                             </button>
                         </form>
                     )}
