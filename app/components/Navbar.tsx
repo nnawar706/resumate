@@ -1,17 +1,14 @@
 import React from 'react'
-import {Link, useLocation} from "react-router";
+import {Link} from "react-router";
 import {LOGO} from "../../constants";
 
-const Navbar = () => {
-    const location = useLocation();
-    const isUpload = location.pathname === "/upload";
-
+const Navbar = ({ showUpload }: NavbarProps) => {
     return (
         <nav className={"navbar"}>
             <Link to={"/"}>
                 <img src={LOGO} height={200} width={200}  alt={"logo"}/>
             </Link>
-            {!isUpload && (
+            {showUpload && (
                 <Link to={"/upload"} className={"primary-button w-fit"}>
                     Upload Resume
                 </Link>

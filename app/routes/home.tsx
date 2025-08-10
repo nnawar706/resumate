@@ -26,7 +26,7 @@ export default function Home() {
   }, [isAuthenticated]);
 
   return <main className={"bg-[url('/images/bg-main.svg')] bg-cover"}>
-    <Navbar/>
+    <Navbar showUpload={true}/>
 
     <section className={"main-section"}>
       <div className={"page-heading py-16"}>

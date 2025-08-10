@@ -80,13 +80,13 @@ const Upload = () => {
 
         await kv.set(`resume#${uuid}`, JSON.stringify(data));
         setStatus("Redirecting...");
-        console.log(data);
-        // navigate(``)
+
+        navigate(`/resume/${uuid}`)
     }
 
     return (
         <main className={"upload-section"}>
-            <Navbar/>
+            <Navbar showUpload={false}/>
 
             <section className={"main-section"}>
                 <div className={"page-heading py-16"}>

@@ -1,5 +1,6 @@
 interface ResumeProps extends InstructionProps {
     id: string;
+    companyName: string;
     feedback: FeedbackProps;
     imageUrl: string;
 }
@@ -39,6 +40,10 @@ interface FeedbackTip2 {
     explanation: string;
 }
 
+interface CategoryProps extends ScoreProps {
+    title: string;
+}
+
 interface ScoreProps {
     score: number;
 }
@@ -50,5 +55,9 @@ interface FileUploaderProps {
 
 interface InstructionProps {
     jobTitle: string;
-    jobDescription: string;
+    jobDescription?: string;
+}
+
+interface NavbarProps {
+    showUpload: boolean;
 }
