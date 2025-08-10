@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {usePuterStore} from "~/lib/puter";
-import {Link, useNavigate, useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import Navbar from "~/components/Navbar";
 import Summary from "~/components/Summary";
 import Ats from "~/components/ATS";
@@ -68,9 +68,9 @@ const Resume = () => {
                         <div className={"flex flex-col gap-8 animate-in fade-in duration-1000"}>
                             <Summary feedback={feedback}/>
 
-                            {/*<Ats score={feedback.ATS.score || 0} suggestions={feedback.ATS.tips || []}/>*/}
+                            <Ats score={feedback.ATS.score || 0} suggestions={feedback.ATS.tips || []}/>
 
-                            {/*<Details feedback={feedback}/>*/}
+                            <Details feedback={feedback}/>
                         </div>
                     ) : (<img src={SCANNER} className={"w-full"} alt={"resume-scanner"}/>)}
                 </div>

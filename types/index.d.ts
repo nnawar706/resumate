@@ -44,6 +44,15 @@ interface CategoryProps extends ScoreProps {
     title: string;
 }
 
+interface SuggestionProps {
+    type: "good" | "improve";
+    tip: string;
+}
+
+interface ATSProps extends ScoreProps {
+    suggestions: SuggestionProps[];
+}
+
 interface ScoreProps {
     score: number;
 }

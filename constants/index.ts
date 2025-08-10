@@ -4,6 +4,8 @@ import scanner from "/images/resume-scan-2.gif"
 import pdf from "/images/pdf.png";
 import cross from "/icons/cross.svg";
 import upload from "/icons/upload.svg";
+import check from "/icons/check.svg";
+import warning from "/icons/warning.svg";
 
 export const LOGO = logo
 export const SCANNER = scanner
@@ -11,6 +13,8 @@ export const RESUMESCANNER = resumeScanner
 export const PDF = pdf
 export const ICONCROSS = cross
 export const ICONUPLOAD = upload
+export const ICONCHECK = check
+export const ICONWARNING = warning
 
 export const MAXFILESIZE = 20 * 1024 * 1024 // 20MB in bytes
 
