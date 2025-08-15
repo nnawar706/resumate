@@ -71,3 +71,8 @@ interface NavbarProps {
     showUpload: boolean;
     showSignOut?: boolean;
 }
+
+interface SummaryProps extends InstructionProps {
+    companyName: string;
+    feedback: FeedbackProps;
+}

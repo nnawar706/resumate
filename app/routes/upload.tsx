@@ -6,10 +6,11 @@ import {prepareInstructions, RESUMESCANNER} from "../../constants";
 import FileUploader from "~/components/FileUploader";
 import {convertPdfToImage} from "~/lib/pdf2image";
 import {generateUUID} from "~/lib/utils";
+import Footer from "~/components/Footer";
 
 const Upload = () => {
     const navigate = useNavigate();
-    const { auth, isLoading, fs, kv, ai } = usePuterStore();
+    const { auth, fs, kv, ai } = usePuterStore();
     const isAuthenticated = auth.isAuthenticated;
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const [status, setStatus] = useState<string>("");
@@ -34,8 +35,6 @@ const Upload = () => {
         if (!file) return;
 
         setIsProcessing(true);
-
-        // console.log({companyName, jobTitle, jobDescription, file})
 
         setStatus("Uploading in progress...");
 
@@ -89,13 +88,13 @@ const Upload = () => {
             <Navbar showUpload={false}/>
 
             <section className={"main-section"}>
-                <div className={"page-heading py-16"}>
+                <div className={"page-heading"}>
                     <h1>Smart feedback for your dream job</h1>
                     {isProcessing ? (
-                        <>
+                        <div>
                             <h3>{status}</h3>
-                            <img src={RESUMESCANNER} className={"w-full"} alt={"resume-scanner"}/>
-                        </>
+                            <img src={RESUMESCANNER} alt={"resume-scanner"} width={300}/>
+                        </div>
                     ): (
                         <h3>Drop your resume for an ATS score and improvement tips</h3>
                     )}
@@ -135,6 +134,8 @@ const Upload = () => {
                     )}
                 </div>
             </section>
+
+            <Footer/>
         </main>
     )
 }

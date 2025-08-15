@@ -10,14 +10,12 @@ const FileUploader = ({file, onFileSelect}: FileUploaderProps) => {
         onFileSelect?.(file);
     }, [onFileSelect])
 
-    const {getRootProps, getInputProps, isDragActive, acceptedFiles} = useDropzone({
+    const {getRootProps, getInputProps} = useDropzone({
         onDrop,
         multiple: false,
         accept: { 'application/pdf': ['.pdf']},
         maxSize: MAXFILESIZE,
     })
-
-    // const file = acceptedFiles[0] || null;
 
     return (
         <div className={"w-full p-4 rounded-2xl bg-white"}>

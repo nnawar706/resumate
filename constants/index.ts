@@ -16,6 +16,7 @@ export const ICONUPLOAD = upload
 export const ICONCHECK = check
 export const ICONWARNING = warning
 
+export const PREVIEWLENGTH = 150;
 export const MAXFILESIZE = 20 * 1024 * 1024 // 20MB in bytes
 
 export const RADIUS = 40;

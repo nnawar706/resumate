@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react'
 import {useLocation, useNavigate} from "react-router";
 import {usePuterStore} from "~/lib/puter";
+import {LOGO, RESUMESCANNER} from "../../constants";
+import Footer from "~/components/Footer";
 
 export const meta = () => {
     return [
@@ -27,21 +29,26 @@ const Auth = () => {
 
     return (
         <main className={"auth"}>
-            <section className={"gradient-border shadow-lg"}>
-                <div className={"flex flex-col gap-8 bg-white rounded-2xl p-10"}>
-                    <div className={"flex flex-col items-center gap-2 text-center"}>
-                        <h1>Welcome</h1>
-                        <h2>Sign In to Continue Your Journey of Job Hunting</h2>
-                    </div>
-                    <div>
-                        {isLoading ? (
-                            <button className={"auth-button animate-pulse"}>Signing you in...</button>
-                        ): (
-                            <button className={"auth-button"}
-                                    onClick={auth.signIn}>
-                                Sign In
-                            </button>
-                        )}
+            <section className={"relative w-[850px] h-[550px] bg-white rounded-xl shadow-xl"}>
+                <div
+                    className={"absolute z-1 right-0 w-1/2 px-0 md:px-2 h-full flex flex-col gap-4 items-center justify-center text-center"}>
+                    <img src={LOGO} width={300} alt={"logo"}/>
+                    <h3 className={"text-gray-700"}>Sign In to Continue Your Journey of Job Hunting</h3>
+
+                    {isLoading ? (
+                        <button className={"auth-button animate-pulse"}>Signing you in...</button>
+                    ): (
+                        <button className={"auth-button"}
+                                onClick={auth.signIn}>
+                            Sign In
+                        </button>
+                    )}
+                </div>
+
+                <div className={"absolute w-full h-full"}>
+                    <div className={"absolute w-1/2 h-full bg-[#c1d3f8] flex flex-col justify-center items-center"}>
+                        <img src={RESUMESCANNER} className={"w-full"} alt={"resume-scanner"}/>
+                        <Footer/>
                     </div>
                 </div>
             </section>

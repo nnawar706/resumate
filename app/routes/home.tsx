@@ -6,6 +6,7 @@ import {SCANNER} from "../../constants";
 import Navbar from "~/components/Navbar";
 import Resume from "~/components/Resume";
 import {usePuterStore} from "~/lib/puter";
+import Footer from "~/components/Footer";
 
 export const meta = ({}: Route.MetaArgs) => {
   return [
@@ -76,5 +77,7 @@ export default function Home() {
           </div>
       )}
     </section>
+
+    <Footer/>
   </main>;
 }

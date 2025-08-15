@@ -6,6 +6,7 @@ import Summary from "~/components/Summary";
 import Ats from "~/components/ATS";
 import Details from "~/components/Details";
 import {SCANNER} from "../../constants";
+import Footer from "~/components/Footer";
 
 export const meta = () => ([
     { title: 'ResuMate | Review ' },
@@ -15,6 +16,9 @@ export const meta = () => ([
 const Resume = () => {
     const { id } = useParams();
     const { auth, isLoading, fs, kv } = usePuterStore();
+    const [jobTitle, setJobTitle] = useState<string>("");
+    const [jobDescription, setJobDescription] = useState<string>("");
+    const [companyName, setCompanyName] = useState<string>("");
     const [imageUrl, setImageUrl] = useState<string>("");
     const [resumeUrl, setResumeUrl] = useState<string>("");
     const [feedback, setFeedback] = useState<FeedbackProps | null>(null);
@@ -31,6 +35,10 @@ const Resume = () => {
             if (!resume) return;
 
             const data = JSON.parse(resume);
+
+            setJobTitle(data.jobTitle);
+            setJobDescription(data.jobDescription);
+            setCompanyName(data.companyName);
 
             const resumeBlob = await fs.read(data.resumePath);
             if (!resumeBlob) return;
@@ -67,7 +75,11 @@ const Resume = () => {
                             <h2 className={"text-4xl font-bold"}>Resume Review</h2>
 
                             <div className={"flex flex-col gap-8 animate-in fade-in duration-1000"}>
-                                <Summary feedback={feedback}/>
+                                <Summary
+                                    jobTitle={jobTitle}
+                                    jobDescription={jobDescription}
+                                    companyName={companyName}
+                                    feedback={feedback}/>
 
                                 <Ats score={feedback.ATS.score || 0} suggestions={feedback.ATS.tips || []}/>
 
@@ -75,8 +87,13 @@ const Resume = () => {
                             </div>
                         </div>
                     </section>
-            ):
-                (<img src={SCANNER} className={"w-full"} alt={"resume-scanner"}/>)}
+            ): (
+                <div className={"flex justify-center"}>
+                    <img src={SCANNER} alt={"resume-scanner"} width={280}/>
+                </div>
+            )}
+
+            <Footer/>
         </main>
     )
 }
