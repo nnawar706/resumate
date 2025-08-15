@@ -11,7 +11,7 @@ import Footer from "~/components/Footer";
 export const meta = ({}: Route.MetaArgs) => {
   return [
     { title: "ResuMate" },
-    { name: "description", content: "Your go-to AI resume companion" },
+    { name: "description", content: "Your go-to AI resume companion" }
   ];
 }
 
